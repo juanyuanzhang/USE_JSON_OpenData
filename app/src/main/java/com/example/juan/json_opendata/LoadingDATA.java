@@ -4,15 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -56,7 +53,7 @@ public class LoadingDATA extends AsyncTask<String,Void,List<Contact>>{
             for(int i = 0 ; i<jsonArray.length();i++){
                 if(jsonArray.getJSONObject(i)!=null) {
                     result.add(convertContact(jsonArray.getJSONObject(i)));
-                    Log.v("data=", jsonArray.getJSONObject(i).toString());
+                    //Log.v("data=", jsonArray.getJSONObject(i).toString());
                 }
             }
             return result;
@@ -69,13 +66,15 @@ public class LoadingDATA extends AsyncTask<String,Void,List<Contact>>{
     private Contact convertContact(JSONObject jsonObject) throws JSONException{
         String name = jsonObject.getString("Name");
         String address = jsonObject.getString("Address");
-        Log.i("name=",name);
-        return new Contact(name,address);
+        String tel = jsonObject.getString("Tel");
+        String img = jsonObject.getString("PicURL");
+        Log.i("img=",img);
+        return new Contact(name,address,tel,img);
     }
     @Override
     protected void onPreExecute() {  //預先執行的方法(在背景執行前執行
         super.onPreExecute();
-       progressDialog.setMessage("檔案下載中...");
+        progressDialog.setMessage("檔案下載中...");
         progressDialog.show();
     }
 

@@ -1,7 +1,10 @@
 package com.example.juan.json_opendata;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -35,6 +38,19 @@ public class MainActivity extends AppCompatActivity {
         contactAdapter = new ContactAdapter(this,list);
         listView.setAdapter(contactAdapter);
         contactAdapter.notifyDataSetChanged();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MainActivity.this,MainDataActivity.class);
+                intent.putExtra("name",list.get(i).getName());
+                intent.putExtra("address",list.get(i).getAddress());
+                intent.putExtra("tel",list.get(i).getTel());
+                intent.putExtra("img",list.get(i).getImg());
+                startActivity(intent);
+
+            }
+        });
 
     }
 }
